@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+
+### Convenience script for operating the local stack.
+###
+### Usage:
+###     ./local <docker-compose command with its options, if necessary>
+###
+### Example:
+###     ./deploy_local config
+###     ./deploy_local build
+###     ./deploy_local up
+###     ./deploy_local up -d
+
+
+set -o errexit
+set -o nounset
+
+
+docker_compose_files='--file docker-compose.yaml'
+
+APP_ROOT_DIR_NAME=app docker-compose ${docker_compose_files} $*
