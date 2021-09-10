@@ -12,7 +12,10 @@ from .memcache_api import mc_client
 
 class BlockService:
     @classmethod
-    def get_block_by_number(cls, block_number="latest"):
+    def get_block_by_number(cls, block_number):
+        if block_number == 'latest':
+            block_number = cls.get_latest_block_number()
+
         request_json = CFRequest(id=1, params=[block_number, True])
         logger.debug(request_json)
 
@@ -75,6 +78,19 @@ class BlockService:
             raise HTTPException(
                 status_code=404, detail=f'Transaction with index "{index}" does not exist in the block response'
             )
+
+    @classmethod
+    def get_latest_block_number(cls, block_number="latest"):
+        request = CFRequest(id=1, method="eth_blockNumber", params=[])
+        logger.debug("requesting latest blocl number with params: '%s'", request)
+
+        result = requests.post(
+            url=settings.cf_url, headers={"Content-Type": "application/json"}, data=request.json()
+        ).json()
+        logger.debug("latest blocknumber response: %s", result['result'])
+
+        return result['result']
+
 
     @classmethod
     def _get_cf_block_data(cls, block_number, cache, data):
