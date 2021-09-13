@@ -2,10 +2,6 @@
 This simple solution is a demo of the caching proxy server for the Cloud Flare API 
 for gettings Etherium blocks by number. It uses Memcached as a prodaction ready LRU cache container. 
 
-# Install Locally
-```angular2html
-poetry run install
-```
 
 # Start
 1. Clone repo
