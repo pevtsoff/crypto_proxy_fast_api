@@ -57,6 +57,14 @@ def test_get_404_error_for_non_existing_block():
             assert response.json() == {"detail": "Block #xxx  not found"}
 
 
+def test_get_latest_block():
+    pass
+
+
+def test_get_transactions_for_latest_block():
+    pass
+
+
 def test_get_transaction_by_hash():
     pass
 

@@ -35,3 +35,9 @@ services:
     hostname: app
     volumes:
       - .:/app/crypto_proxy
+
+
+networks:
+  default:
+    external:
+      name: localdev

@@ -13,7 +13,7 @@ from .memcache_api import mc_client
 class BlockService:
     @classmethod
     def get_block_by_number(cls, block_number):
-        if block_number == 'latest':
+        if block_number == "latest":
             block_number = cls.get_latest_block_number()
 
         request_json = CFRequest(id=1, params=[block_number, True])
@@ -23,6 +23,9 @@ class BlockService:
 
     @classmethod
     def get_transaction_for_block(cls, block_number, tr_id):
+        if block_number == "latest":
+            block_number = cls.get_latest_block_number()
+
         request_json = CFRequest(id=1, params=[block_number, True])
         logger.debug(request_json)
         transactions = cls.make_cf_request(request_json)["result"].get("transactions", [])
@@ -87,10 +90,9 @@ class BlockService:
         result = requests.post(
             url=settings.cf_url, headers={"Content-Type": "application/json"}, data=request.json()
         ).json()
-        logger.debug("latest blocknumber response: %s", result['result'])
+        logger.debug("latest blocknumber response: %s", result["result"])
 
-        return result['result']
-
+        return result["result"]
 
     @classmethod
     def _get_cf_block_data(cls, block_number, cache, data):
